@@ -8,10 +8,10 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE.md file that was distributed with this source code.
  *
- * @see https://github.com/narrowspark/http-emitter
+ * @see https://github.com/Kekos/http-emitter
  */
 
-namespace Narrowspark\HttpEmitter\Tests;
+namespace Kekos\HttpEmitter\Tests;
 
 /*
  * Zend Framework (http://framework.zend.com/)
@@ -22,8 +22,8 @@ namespace Narrowspark\HttpEmitter\Tests;
  */
 
 use Laminas\Diactoros\Response;
-use Narrowspark\HttpEmitter\SapiEmitter;
-use Narrowspark\HttpEmitter\Tests\Helper\HeaderStack;
+use Kekos\HttpEmitter\SapiEmitter;
+use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 use Psr\Http\Message\StreamInterface;
 use function Safe\ob_end_clean;
 
@@ -31,7 +31,7 @@ use function Safe\ob_end_clean;
  * @internal
  *
  * @medium
- * @covers \Narrowspark\HttpEmitter\SapiEmitter
+ * @covers \Kekos\HttpEmitter\SapiEmitter
  */
 final class SapiEmitterTest extends AbstractEmitterTest
 {

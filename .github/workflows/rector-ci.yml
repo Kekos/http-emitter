@@ -2,7 +2,7 @@
 
 name: "Rector"
 
-on: # yamllint disable-line rule:truthy
+on:
     push:
         paths:
             - "**.php"

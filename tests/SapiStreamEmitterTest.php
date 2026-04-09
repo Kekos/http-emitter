@@ -8,10 +8,10 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE.md file that was distributed with this source code.
  *
- * @see https://github.com/narrowspark/http-emitter
+ * @see https://github.com/Kekos/http-emitter
  */
 
-namespace Narrowspark\HttpEmitter\Tests;
+namespace Kekos\HttpEmitter\Tests;
 
 /*
  * Zend Framework (http://framework.zend.com/)
@@ -27,10 +27,10 @@ use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\TextResponse;
-use Narrowspark\HttpEmitter\AbstractSapiEmitter;
-use Narrowspark\HttpEmitter\SapiStreamEmitter;
-use Narrowspark\HttpEmitter\Tests\Helper\HeaderStack;
-use Narrowspark\HttpEmitter\Tests\Helper\StreamMock;
+use Kekos\HttpEmitter\AbstractSapiEmitter;
+use Kekos\HttpEmitter\SapiStreamEmitter;
+use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
+use Kekos\HttpEmitter\Tests\Helper\StreamMock;
 use Psr\Http\Message\StreamInterface;
 use function Safe\json_encode;
 use function Safe\ob_end_clean;
@@ -42,11 +42,11 @@ use function strlen;
  * @internal
  *
  * @medium
- * @covers \Narrowspark\HttpEmitter\SapiStreamEmitter
+ * @covers \Kekos\HttpEmitter\SapiStreamEmitter
  */
 final class SapiStreamEmitterTest extends AbstractEmitterTest
 {
-    /** @var \Narrowspark\HttpEmitter\SapiStreamEmitter */
+    /** @var \Kekos\HttpEmitter\SapiStreamEmitter */
     protected AbstractSapiEmitter $emitter;
 
     protected function setUp(): void

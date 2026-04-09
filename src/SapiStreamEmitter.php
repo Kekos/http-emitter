@@ -8,10 +8,10 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE.md file that was distributed with this source code.
  *
- * @see https://github.com/narrowspark/http-emitter
+ * @see https://github.com/Kekos/http-emitter
  */
 
-namespace Narrowspark\HttpEmitter;
+namespace Kekos\HttpEmitter;
 
 use Psr\Http\Message\ResponseInterface;
 use const CONNECTION_NORMAL;
@@ -20,7 +20,7 @@ use function Safe\substr;
 use function strlen;
 
 /**
- * @see \Narrowspark\HttpEmitter\Tests\SapiStreamEmitterTest
+ * @see \Kekos\HttpEmitter\Tests\SapiStreamEmitterTest
  */
 final class SapiStreamEmitter extends AbstractSapiEmitter
 {

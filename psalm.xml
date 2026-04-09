@@ -30,7 +30,6 @@
         <ignoreFiles>
             <directory name="vendor"/>
             <directory name=".build"/>
-            <directory name=".docker"/>
             <directory name=".github"/>
         </ignoreFiles>
     </projectFiles>

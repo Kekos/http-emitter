@@ -5,10 +5,6 @@ labels: 'Enhancement'
 assignees: ''
 ---
 
-<!--
-    The Code of Conduct (../CODE_OF_CONDUCT.md) applies to all the activity on this repository.
--->
-
 **Is your feature request related to a problem? Please describe.**
 <!-- A clear and concise description of what the problem is. Ex. I have an issue when [...] -->
 

@@ -1,7 +1,7 @@
 {
-    "name": "narrowspark/http-emitter",
+    "name": "kekos/http-emitter",
     "type": "library",
-    "description": "Emitting psr-7 responses.",
+    "description": "Emitting PSR-7 responses.",
     "keywords": [
         "narrowspark",
         "http",
@@ -15,6 +15,11 @@
             "name": "Daniel Bannert",
             "email": "d.bannert@anolilab.de",
             "homepage": "http://www.anolilab.de",
+            "role": "Developer"
+        },
+        {
+            "name": "Christoffer Lindahl Hassel",
+            "homepage": "https://kekos.se",
             "role": "Developer"
         }
     ],
@@ -47,7 +52,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Narrowspark\\HttpEmitter\\": "src/"
+            "Kekos\\HttpEmitter\\": "src/"
         },
         "exclude-from-classmap": [
             "tests/"
@@ -55,7 +60,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Narrowspark\\HttpEmitter\\Tests\\": "tests/"
+            "Kekos\\HttpEmitter\\Tests\\": "tests/"
         },
         "files": [
             "tests/OverwritePhpFunctions.php"
@@ -79,7 +84,7 @@
         "test:coverage": "phpunit --coverage-html=./.build/phpunit/coverage"
     },
     "support": {
-        "issues": "https://github.com/narrowspark/http-emitter/issues",
-        "source": "https://github.com/narrowspark/http-emitter"
+        "issues": "https://github.com/Kekos/http-emitter/issues",
+        "source": "https://github.com/Kekos/http-emitter"
     }
 }

@@ -8,12 +8,12 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE.md file that was distributed with this source code.
  *
- * @see https://github.com/narrowspark/http-emitter
+ * @see https://github.com/Kekos/http-emitter
  */
 
-namespace Narrowspark\HttpEmitter;
+namespace Kekos\HttpEmitter;
 
-use Narrowspark\HttpEmitter\Contract\RuntimeException;
+use Kekos\HttpEmitter\Contract\RuntimeException;
 use Psr\Http\Message\ResponseInterface;
 use const PHP_SAPI;
 use function function_exists;
@@ -42,7 +42,7 @@ abstract class AbstractSapiEmitter
     /**
      * Assert either that no headers been sent or the output buffer contains no content.
      *
-     * @throws \Narrowspark\HttpEmitter\Contract\RuntimeException
+     * @throws \Kekos\HttpEmitter\Contract\RuntimeException
      */
     protected function assertNoPreviousOutput(): void
     {

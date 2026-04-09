@@ -2,7 +2,7 @@
 
 name: "Coding Standard"
 
-on: # yamllint disable-line rule:truthy
+on:
     push:
         paths:
             - "**.php"

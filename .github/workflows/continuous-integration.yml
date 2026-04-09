@@ -2,7 +2,7 @@
 
 name: "Continuous Integration"
 
-on: # yamllint disable-line rule:truthy
+on:
     push:
         paths:
             - "**.php"
@@ -206,13 +206,13 @@ jobs:
 
             - name: "Run Test's Coverage"
               if: "matrix.dependencies == 'locked'"
-              run: Invoke-Expression -Command '.\vendor\bin\phpunit --verbose --configuration=.\phpunit.xml --coverage-clover=.\.build\phpunit\coverage\clover.xml' # yamllint disable-line rule:quoted-strings
+              run: Invoke-Expression -Command '.\vendor\bin\phpunit --verbose --configuration=.\phpunit.xml --coverage-clover=.\.build\phpunit\coverage\clover.xml'
               env:
                   XDEBUG_MODE: "coverage"
 
             - name: "Run Test's Suite"
               if: "matrix.dependencies == 'lowest' || matrix.dependencies == 'highest'"
-              run: Invoke-Expression -Command '.\vendor\bin\phpunit --verbose --configuration=.\phpunit.xml' # yamllint disable-line rule:quoted-strings
+              run: Invoke-Expression -Command '.\vendor\bin\phpunit --verbose --configuration=.\phpunit.xml'
 
             - name: "Upload windows php coverage result"
               if: "matrix.dependencies == 'locked'"

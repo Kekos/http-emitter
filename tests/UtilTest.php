@@ -8,17 +8,17 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE.md file that was distributed with this source code.
  *
- * @see https://github.com/narrowspark/http-emitter
+ * @see https://github.com/Kekos/http-emitter
  */
 
-namespace Narrowspark\HttpEmitter\Tests;
+namespace Kekos\HttpEmitter\Tests;
 
 use Laminas\Diactoros\Response;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Narrowspark\HttpEmitter\SapiEmitter;
-use Narrowspark\HttpEmitter\Tests\Helper\HeaderStack;
-use Narrowspark\HttpEmitter\Util;
+use Kekos\HttpEmitter\SapiEmitter;
+use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
+use Kekos\HttpEmitter\Util;
 use Psr\Http\Message\StreamInterface;
 use function Safe\ob_end_clean;
 
@@ -26,7 +26,7 @@ use function Safe\ob_end_clean;
  * @internal
  *
  * @medium
- * @covers \Narrowspark\HttpEmitter\Util
+ * @covers \Kekos\HttpEmitter\Util
  */
 final class UtilTest extends MockeryTestCase
 {

@@ -12,7 +12,7 @@ $license = License\Type\MIT::markdown(
         new \DateTimeZone('UTC')
     ),
     License\Holder::fromString('Daniel Bannert'),
-    License\Url::fromString('https://github.com/narrowspark/http-emitter')
+    License\Url::fromString('https://github.com/Kekos/http-emitter')
 );
 
 $license->save();
@@ -25,7 +25,6 @@ $config->getFinder()
     ->exclude([
         '.build',
         '.dependabot',
-        '.docker',
         '.github',
         'vendor',
     ])

@@ -8,10 +8,10 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE.md file that was distributed with this source code.
  *
- * @see https://github.com/narrowspark/http-emitter
+ * @see https://github.com/Kekos/http-emitter
  */
 
-namespace Narrowspark\HttpEmitter;
+namespace Kekos\HttpEmitter;
 
 use Psr\Http\Message\ResponseInterface;
 use const PHP_OUTPUT_HANDLER_CLEANABLE;
@@ -22,7 +22,7 @@ use function Safe\ob_end_clean;
 use function Safe\ob_end_flush;
 
 /**
- * @see \Narrowspark\HttpEmitter\Tests\UtilTest
+ * @see \Kekos\HttpEmitter\Tests\UtilTest
  */
 final class Util
 {

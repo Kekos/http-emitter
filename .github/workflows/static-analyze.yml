@@ -2,7 +2,7 @@
 
 name: "Static analyzing"
 
-on: # yamllint disable-line rule:truthy
+on:
     push:
         paths:
             - "**.php"
@@ -13,7 +13,7 @@ on: # yamllint disable-line rule:truthy
             - "composer.json"
 
 jobs:
-    narrowspark-phpstan-static-analysis:
+    phpstan-static-analysis:
         name: "PHPStan"
 
         runs-on: "ubuntu-latest"
@@ -97,7 +97,7 @@ jobs:
             - name: "analyze php code"
               run: "composer phpstan -- --error-format=checkstyle | cs2pr"
 
-    narrowspark-psalm-static-analysis:
+    psalm-static-analysis:
         name: "Psalm"
 
         runs-on: "ubuntu-latest"

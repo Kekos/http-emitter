@@ -8,10 +8,10 @@ declare(strict_types=1);
  * For the full copyright and license information, please view
  * the LICENSE.md file that was distributed with this source code.
  *
- * @see https://github.com/narrowspark/http-emitter
+ * @see https://github.com/Kekos/http-emitter
  */
 
-namespace Narrowspark\HttpEmitter\Tests;
+namespace Kekos\HttpEmitter\Tests;
 
 /*
  * Zend Framework (http://framework.zend.com/)
@@ -22,9 +22,9 @@ namespace Narrowspark\HttpEmitter\Tests;
  */
 
 use Laminas\Diactoros\Response;
-use Narrowspark\HttpEmitter\AbstractSapiEmitter;
-use Narrowspark\HttpEmitter\Contract\RuntimeException;
-use Narrowspark\HttpEmitter\Tests\Helper\HeaderStack;
+use Kekos\HttpEmitter\AbstractSapiEmitter;
+use Kekos\HttpEmitter\Contract\RuntimeException;
+use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 use PHPUnit\Framework\TestCase;
 use function Safe\sprintf;
 

@@ -6,10 +6,6 @@ assignees: ''
 
 ---
 
-<!--
-    The Code of Conduct (../CODE_OF_CONDUCT.md) applies to all the activity on this repository.
--->
-
 **Version(s) affected**: x.y.z
 
 **Description**

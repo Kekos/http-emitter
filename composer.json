@@ -28,9 +28,6 @@
         "psr/http-message": "^1.0",
         "thecodingmachine/safe": "^1.3.3"
     },
-    "provide": {
-        "psr/http-message-implementation": "^1.0"
-    },
     "require-dev": {
         "ext-json": "*",
         "laminas/laminas-diactoros": "^2.5.0",

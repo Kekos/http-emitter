@@ -26,12 +26,13 @@ use Kekos\HttpEmitter\AbstractSapiEmitter;
 use Kekos\HttpEmitter\Contract\RuntimeException;
 use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 use PHPUnit\Framework\TestCase;
+
 use function Safe\sprintf;
 
 /**
  * @internal
  */
-abstract class AbstractEmitterTest extends TestCase
+abstract class AbstractEmitterTestCase extends TestCase
 {
     protected AbstractSapiEmitter $emitter;
 
@@ -45,7 +46,7 @@ abstract class AbstractEmitterTest extends TestCase
         $this->expectExceptionMessage(sprintf(
             'Unable to emit response: Headers already sent in file %s on line %s. This happens if echo, print, printf, print_r, var_dump, var_export or similar statement that writes to the output buffer are used.',
             HeaderStack::$headersFile,
-            (string) HeaderStack::$headersLine
+            (string) HeaderStack::$headersLine,
         ));
 
         $this->emitter->emit($this->arrangeStatus200AndTypeTextResponse());

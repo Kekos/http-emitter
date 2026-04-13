@@ -50,7 +50,7 @@ final class HeaderStack
     /**
      * Return the current header stack.
      *
-     * @psalm-return array<array-key, array<string, bool|int|string|null>>
+     * @return array<array-key, array<string, bool|int|string|null>>
      *
      * @return array<mixed, array<null|bool|int|string>>
      */

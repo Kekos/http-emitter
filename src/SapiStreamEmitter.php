@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace Kekos\HttpEmitter;
 
 use Psr\Http\Message\ResponseInterface;
-use const CONNECTION_NORMAL;
+
 use function Safe\preg_match;
 use function Safe\substr;
 use function strlen;
+
+use const CONNECTION_NORMAL;
 
 /**
  * @see \Kekos\HttpEmitter\Tests\SapiStreamEmitterTest
@@ -70,7 +72,7 @@ final class SapiStreamEmitter extends AbstractSapiEmitter
      * Parse content-range header
      * http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.16.
      *
-     * @psalm-return null|array{0: string, 1: int, 2: int, 3: string|int} returns null if no content range or an invalid content range is provided
+     * @return null|array{0: string, 1: int, 2: int, 3: string|int} returns null if no content range or an invalid content range is provided
      */
     private function parseContentRange(string $header): ?array
     {

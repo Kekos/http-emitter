@@ -32,6 +32,7 @@ use Kekos\HttpEmitter\SapiStreamEmitter;
 use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 use Kekos\HttpEmitter\Tests\Helper\StreamMock;
 use Psr\Http\Message\StreamInterface;
+
 use function Safe\json_encode;
 use function Safe\ob_end_clean;
 use function Safe\ob_end_flush;
@@ -44,7 +45,7 @@ use function strlen;
  * @medium
  * @covers \Kekos\HttpEmitter\SapiStreamEmitter
  */
-final class SapiStreamEmitterTest extends AbstractEmitterTest
+final class SapiStreamEmitterTest extends AbstractEmitterTestCase
 {
     /** @var \Kekos\HttpEmitter\SapiStreamEmitter */
     protected AbstractSapiEmitter $emitter;
@@ -62,7 +63,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
 
     public function testEmitCallbackStreamResponse(): void
     {
-        $stream = new CallbackStream(static fn (): string => 'it works');
+        $stream = new CallbackStream(static fn(): string => 'it works');
 
         $response = (new Response())
             ->withStatus(200)
@@ -132,7 +133,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
                 if ($bufferLength > $peakBufferLength) {
                     $peakBufferLength = $bufferLength;
                 }
-            }
+            },
         );
 
         $stream = $this->createMock(StreamInterface::class);
@@ -147,10 +148,10 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
             $stream
                 ->expects(self::atLeastOnce())
                 ->method('rewind')
-                ->willReturnCallback(static fn (): bool => $streamMock->handleRewind());
+                ->willReturnCallback(static fn(): bool => $streamMock->handleRewind());
             $stream
                 ->method('seek')
-                ->willReturnCallback(static fn ($offset, $whence): bool => $streamMock->handleSeek($offset, $whence));
+                ->willReturnCallback(static fn($offset, $whence): bool => $streamMock->handleSeek($offset, $whence));
         }
 
         if (! $seekable) {
@@ -164,10 +165,10 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
                 ->method('__toString');
             $stream
                 ->method('eof')
-                ->willReturnCallback(static fn (): bool => $streamMock->handleEof());
+                ->willReturnCallback(static fn(): bool => $streamMock->handleEof());
             $stream
                 ->method('read')
-                ->willReturnCallback(static fn ($length): string => $streamMock->handleRead($length));
+                ->willReturnCallback(static fn($length): string => $streamMock->handleRead($length));
         }
 
         if (! $readable) {
@@ -181,14 +182,14 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
             $seekable
                 ? $stream
                     ->method('getContents')
-                    ->willReturnCallback(static fn (): string => $streamMock->handleGetContents())
+                    ->willReturnCallback(static fn(): string => $streamMock->handleGetContents())
                 : $stream
                     ->expects(self::never())
                     ->method('getContents');
 
             $stream
                 ->method('__toString')
-                ->willReturnCallback(static fn (): string => $streamMock->handleToString());
+                ->willReturnCallback(static fn(): string => $streamMock->handleToString());
         }
 
         $response = (new Response())
@@ -221,7 +222,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
         bool $readable,
         array $range,
         string $contents,
-        int $maxBufferLength
+        int $maxBufferLength,
     ): void {
         [/* $unit */, $first, $last, /* $length */] = $range;
         $size = strlen($contents);
@@ -242,7 +243,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
             $contents,
             $size,
             $startPosition,
-            $trackPeakBufferLength
+            $trackPeakBufferLength,
         );
 
         $stream = $this->createMock(StreamInterface::class);
@@ -257,7 +258,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
             ->willReturn($size);
         $stream
             ->method('tell')
-            ->willReturnCallback(static fn (): int => $streamMock->handleTell());
+            ->willReturnCallback(static fn(): int => $streamMock->handleTell());
 
         $stream
             ->expects(self::never())
@@ -267,9 +268,9 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
             $stream
                 ->expects(self::atLeastOnce())
                 ->method('seek')
-                ->willReturnCallback(static fn (
+                ->willReturnCallback(static fn(
                     $offset,
-                    $whence
+                    $whence,
                 ): bool => $streamMock->handleSeek($offset, $whence));
         } else {
             $stream
@@ -286,13 +287,13 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
                 ->expects(self::atLeastOnce())
                 ->method('read')
                 ->with(self::isType('int'))
-                ->willReturnCallback(static fn (
-                    $length
+                ->willReturnCallback(static fn(
+                    $length,
                 ): string => $streamMock->handleRead($length));
             $stream
                 ->expects(self::atLeastOnce())
                 ->method('eof')
-                ->willReturnCallback(static fn (): bool => $streamMock->handleEof());
+                ->willReturnCallback(static fn(): bool => $streamMock->handleEof());
             $stream->expects(self::never())->method('getContents');
         } else {
             $stream->expects(self::never())->method('read');
@@ -300,7 +301,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
             $stream
                 ->expects(self::atLeastOnce())
                 ->method('getContents')
-                ->willReturnCallback(static fn (): string => $streamMock->handleGetContents());
+                ->willReturnCallback(static fn(): string => $streamMock->handleGetContents());
         }
 
         $response = (new Response())
@@ -338,7 +339,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
         int $sizeBlocks,
         int $maxAllowedBlocks,
         ?array $rangeBlocks,
-        int $maxBufferLength
+        int $maxBufferLength,
     ): void {
         HeaderStack::$headersSent = false;
 
@@ -382,7 +383,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
             $contentsCallback,
             $sizeBytes,
             $position,
-            $trackPeakBufferLength
+            $trackPeakBufferLength,
         );
 
         $stream = $this->createMock(StreamInterface::class);
@@ -394,29 +395,29 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
             ->willReturn($readable);
         $stream
             ->method('eof')
-            ->willReturnCallback(static fn (): bool => $streamMock->handleEof());
+            ->willReturnCallback(static fn(): bool => $streamMock->handleEof());
 
         if ($seekable) {
             $stream
                 ->method('seek')
-                ->willReturnCallback(static fn (
+                ->willReturnCallback(static fn(
                     $offset,
-                    $whence
+                    $whence,
                 ): bool => $streamMock->handleSeek($offset, $whence));
         }
 
         if ($readable) {
             $stream
                 ->method('read')
-                ->willReturnCallback(static fn (
-                    $length
+                ->willReturnCallback(static fn(
+                    $length,
                 ): string => $streamMock->handleRead($length));
         }
 
         if (! $readable) {
             $stream
                 ->method('getContents')
-                ->willReturnCallback(static fn (): string => $streamMock->handleGetContents());
+                ->willReturnCallback(static fn(): string => $streamMock->handleGetContents());
         }
 
         $response = (new Response())
@@ -433,7 +434,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTest
 
                 return '';
             },
-            $maxBufferLength
+            $maxBufferLength,
         );
 
         gc_collect_cycles();
@@ -542,7 +543,7 @@ HTML;
 
     public function testContentRangeUnseekableBody(): void
     {
-        $body = new CallbackStream(static fn (): string => 'Hello world');
+        $body = new CallbackStream(static fn(): string => 'Hello world');
         $response = (new Response())
             ->withBody($body)
             ->withHeader('Content-Range', 'bytes 3-6/*');
@@ -555,7 +556,7 @@ HTML;
     }
 
     /**
-     * @psalm-return iterable<array{0: bool, 1: bool, 2: string, 3: int}>
+     * @return iterable<array{0: bool, 1: bool, 2: string, 3: int}>
      */
     public static function provideEmitStreamResponseCases(): iterable
     {
@@ -609,7 +610,7 @@ HTML;
     }
 
     /**
-     * @psalm-return iterable<array{
+     * @return iterable<array{
      *     0: bool,
      *     1: bool,
      *     2: array{0: string, 1: int, 2: int, 3: string},
@@ -717,7 +718,7 @@ HTML;
     }
 
     /**
-     * @psalm-return iterable<array{
+     * @return iterable<array{
      *     0: bool,
      *     1: bool,
      *     2: int,
@@ -778,7 +779,7 @@ HTML;
     }
 
     /**
-     * @psalm-return iterable<array<array-key, int|float|bool|string|array|null>>
+     * @return iterable<array<array-key, int|float|bool|string|array<array-key, mixed>|null>>
      */
     public static function provideEmitJsonResponseCases(): iterable
     {
@@ -798,7 +799,7 @@ HTML;
     }
 
     /**
-     * @psalm-return iterable<array<array-key, string>>
+     * @return iterable<array<array-key, string>>
      */
     public static function provideContentRangeCases(): iterable
     {

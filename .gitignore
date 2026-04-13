@@ -7,23 +7,18 @@ composer.phar
 
 rector-temp-phpstan.neon
 
-.php_cs.cache
-.phpunit.result.cache
-.phpunit.xdebug-filter.php
+.php-cs-fixer.cache
+.phpunit.cache/
 
 infection.log
 
 /.build/composer.lock
-/.build/infection/
-!/.build/infection/.gitkeep
 /.build/php-cs-fixer/
 !/.build/php-cs-fixer/.gitkeep
 /.build/phpstan/
 !/.build/phpstan/.gitkeep
 /.build/phpunit/
 !/.build/phpunit/.gitkeep
-/.build/psalm/
-!/.build/psalm/.gitkeep
 
 /.build/vendor
 /.build/logs/

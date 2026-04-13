@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Kekos\HttpEmitter;
 
 use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
+
 use function function_exists;
 
 if (! function_exists('Kekos\\HttpEmitter\\headers_sent')) {
@@ -48,7 +49,7 @@ if (! function_exists('Kekos\\HttpEmitter\\header')) {
                 'header' => $string,
                 'replace' => $replace,
                 'status_code' => $statusCode,
-            ]
+            ],
         );
     }
 }

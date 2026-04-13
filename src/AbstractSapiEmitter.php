@@ -15,12 +15,14 @@ namespace Kekos\HttpEmitter;
 
 use Kekos\HttpEmitter\Contract\RuntimeException;
 use Psr\Http\Message\ResponseInterface;
-use const PHP_SAPI;
+
 use function function_exists;
 use function in_array;
 use function Safe\fastcgi_finish_request;
 use function Safe\sprintf;
 use function Safe\vsprintf;
+
+use const PHP_SAPI;
 
 abstract class AbstractSapiEmitter
 {
@@ -53,7 +55,7 @@ abstract class AbstractSapiEmitter
                 'Unable to emit response: Headers already sent in file %s on line %s. '
                 . 'This happens if echo, print, printf, print_r, var_dump, var_export or similar statement that writes to the output buffer are used.',
                 $file,
-                (string) $line
+                (string) $line,
             ));
         }
 
@@ -89,10 +91,10 @@ abstract class AbstractSapiEmitter
                     $response->getProtocolVersion(),
                     $statusCode,
                     rtrim(' ' . $response->getReasonPhrase()),
-                ]
+                ],
             ),
             true,
-            $statusCode
+            $statusCode,
         );
     }
 
@@ -117,10 +119,10 @@ abstract class AbstractSapiEmitter
                     sprintf(
                         '%s: %s',
                         $name,
-                        $value
+                        $value,
                     ),
                     $first,
-                    $statusCode
+                    $statusCode,
                 );
 
                 $first = false;

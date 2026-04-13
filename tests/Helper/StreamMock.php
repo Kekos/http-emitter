@@ -13,10 +13,11 @@ declare(strict_types=1);
 
 namespace Kekos\HttpEmitter\Tests\Helper;
 
-use const SEEK_SET;
 use function is_callable;
 use function Safe\substr;
 use function strlen;
+
+use const SEEK_SET;
 
 final class StreamMock
 {
@@ -30,9 +31,8 @@ final class StreamMock
         private $contents,
         private int $size,
         private int $position,
-        private $trackPeakBufferLength = null
-    ) {
-    }
+        private $trackPeakBufferLength = null,
+    ) {}
 
     public function handleToString(): string
     {

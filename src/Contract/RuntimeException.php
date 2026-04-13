@@ -15,6 +15,4 @@ namespace Kekos\HttpEmitter\Contract;
 
 use RuntimeException as BaseRuntimeException;
 
-final class RuntimeException extends BaseRuntimeException
-{
-}
+final class RuntimeException extends BaseRuntimeException {}

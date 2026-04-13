@@ -25,6 +25,7 @@ use Laminas\Diactoros\Response;
 use Kekos\HttpEmitter\SapiEmitter;
 use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 use Psr\Http\Message\StreamInterface;
+
 use function Safe\ob_end_clean;
 
 /**
@@ -33,7 +34,7 @@ use function Safe\ob_end_clean;
  * @medium
  * @covers \Kekos\HttpEmitter\SapiEmitter
  */
-final class SapiEmitterTest extends AbstractEmitterTest
+final class SapiEmitterTest extends AbstractEmitterTestCase
 {
     protected function setUp(): void
     {

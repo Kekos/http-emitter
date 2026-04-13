@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Kekos\HttpEmitter\Tests;
 
 use Laminas\Diactoros\Response;
-use Mockery;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Kekos\HttpEmitter\SapiEmitter;
 use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 use Kekos\HttpEmitter\Util;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
+
 use function Safe\ob_end_clean;
 
 /**
@@ -28,7 +28,7 @@ use function Safe\ob_end_clean;
  * @medium
  * @covers \Kekos\HttpEmitter\Util
  */
-final class UtilTest extends MockeryTestCase
+final class UtilTest extends TestCase
 {
     private SapiEmitter $emitter;
 
@@ -65,12 +65,13 @@ final class UtilTest extends MockeryTestCase
 
     public function testDoesNotInjectContentLengthHeaderIfStreamSizeIsUnknown(): void
     {
-        $stream = Mockery::mock(StreamInterface::class);
-        $stream->shouldReceive('__toString')
-            ->once()
-            ->andReturn('Content!');
-        $stream->shouldReceive('getSize')
-            ->andReturnNull();
+        $stream = $this->createMock(StreamInterface::class);
+        $stream->expects($this->once())
+            ->method('__toString')
+            ->willReturn('Content!');
+        $stream->expects($this->any())
+            ->method('getSize')
+            ->willReturn(null);
 
         $response = (new Response())
             ->withStatus(200)

@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace Kekos\HttpEmitter;
 
 use Psr\Http\Message\ResponseInterface;
-use const PHP_OUTPUT_HANDLER_CLEANABLE;
-use const PHP_OUTPUT_HANDLER_FLUSHABLE;
-use const PHP_OUTPUT_HANDLER_REMOVABLE;
+
 use function count;
 use function Safe\ob_end_clean;
 use function Safe\ob_end_flush;
+
+use const PHP_OUTPUT_HANDLER_CLEANABLE;
+use const PHP_OUTPUT_HANDLER_FLUSHABLE;
+use const PHP_OUTPUT_HANDLER_REMOVABLE;
 
 /**
  * @see \Kekos\HttpEmitter\Tests\UtilTest
@@ -31,9 +33,7 @@ final class Util
      *
      * @codeCoverageIgnore
      */
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * Inject the Content-Length header if is not already present.

@@ -92,8 +92,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
             ->method('eof')
             ->willReturn(true);
         $stream
-            ->method('rewind')
-            ->willReturn(true);
+            ->method('rewind');
         $stream
             ->method('getSize')
             ->willReturn(null);

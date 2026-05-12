@@ -21,6 +21,7 @@ namespace Kekos\HttpEmitter\Tests;
  * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
  */
 
+use Kekos\HttpEmitter\Contract\RuntimeException;
 use Laminas\Diactoros\CallbackStream;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\EmptyResponse;
@@ -33,10 +34,6 @@ use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 use Kekos\HttpEmitter\Tests\Helper\StreamMock;
 use Psr\Http\Message\StreamInterface;
 
-use function Safe\json_encode;
-use function Safe\ob_end_clean;
-use function Safe\ob_end_flush;
-use function Safe\substr;
 use function strlen;
 
 /**
@@ -103,7 +100,10 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
 
         ob_start();
         $this->emitter->emit($response);
-        ob_end_clean();
+
+        if (false === ob_end_clean()) {
+            throw new RuntimeException('Failed to clear output buffer');
+        }
 
         foreach (HeaderStack::stack() as $header) {
             self::assertStringNotContainsStringIgnoringCase('Content-Length:', (string) $header['header']);
@@ -442,7 +442,10 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
         $this->emitter->setMaxBufferLength($maxBufferLength);
         $this->emitter->emit($response);
 
-        ob_end_flush();
+        if (false === ob_end_flush()) {
+            throw new RuntimeException('Failed to flush output buffer');
+        }
+
         gc_enable();
         gc_collect_cycles();
 
@@ -504,7 +507,7 @@ HTML;
         $this->emitter->emit($response);
 
         self::assertEquals('application/json', $response->getHeaderLine('content-type'));
-        self::assertEquals(json_encode($contents), ob_get_clean());
+        self::assertEquals(json_encode($contents, JSON_THROW_ON_ERROR), ob_get_clean());
     }
 
     public function testEmitTextResponse(): void

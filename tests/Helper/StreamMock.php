@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Kekos\HttpEmitter\Tests\Helper;
 
 use function is_callable;
-use function Safe\substr;
 use function strlen;
 
 use const SEEK_SET;

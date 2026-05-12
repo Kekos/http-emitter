@@ -13,11 +13,10 @@ declare(strict_types=1);
 
 namespace Kekos\HttpEmitter;
 
+use Kekos\HttpEmitter\Contract\RuntimeException;
 use Psr\Http\Message\ResponseInterface;
 
 use function count;
-use function Safe\ob_end_clean;
-use function Safe\ob_end_flush;
 
 use const PHP_OUTPUT_HANDLER_CLEANABLE;
 use const PHP_OUTPUT_HANDLER_FLUSHABLE;
@@ -72,9 +71,13 @@ final class Util
 
         while ($level-- > $maxBufferLevel && isset($status[$level]) && ($status[$level]['del'] ?? ! isset($status[$level]['flags']) || $flags === ($status[$level]['flags'] & $flags))) {
             if ($flush) {
-                ob_end_flush();
+                if (false === ob_end_flush()) {
+                    throw new RuntimeException('Failed to flush output buffer');
+                }
             } else {
-                ob_end_clean();
+                if (false === ob_end_clean()) {
+                    throw new RuntimeException('Failed to clear output buffer');
+                }
             }
         }
     }

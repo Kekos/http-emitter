@@ -14,9 +14,10 @@ declare(strict_types=1);
 namespace Kekos\HttpEmitter;
 
 use Psr\Http\Message\ResponseInterface;
+use Kekos\HttpEmitter\Tests\SapiEmitterTest;
 
 /**
- * @see \Kekos\HttpEmitter\Tests\SapiEmitterTest
+ * @see SapiEmitterTest
  */
 final class SapiEmitter extends AbstractSapiEmitter
 {

@@ -41,7 +41,7 @@ abstract class AbstractSapiEmitter
     /**
      * Assert either that no headers been sent or the output buffer contains no content.
      *
-     * @throws \Kekos\HttpEmitter\Contract\RuntimeException
+     * @throws RuntimeException
      */
     protected function assertNoPreviousOutput(): void
     {

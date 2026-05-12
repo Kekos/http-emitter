@@ -15,6 +15,7 @@ namespace Kekos\HttpEmitter;
 
 use Kekos\HttpEmitter\Contract\RuntimeException;
 use Psr\Http\Message\ResponseInterface;
+use Kekos\HttpEmitter\Tests\UtilTest;
 
 use function count;
 
@@ -23,7 +24,7 @@ use const PHP_OUTPUT_HANDLER_FLUSHABLE;
 use const PHP_OUTPUT_HANDLER_REMOVABLE;
 
 /**
- * @see \Kekos\HttpEmitter\Tests\UtilTest
+ * @see UtilTest
  */
 final class Util
 {

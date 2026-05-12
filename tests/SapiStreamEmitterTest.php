@@ -44,7 +44,7 @@ use function strlen;
  */
 final class SapiStreamEmitterTest extends AbstractEmitterTestCase
 {
-    /** @var \Kekos\HttpEmitter\SapiStreamEmitter */
+    /** @var SapiStreamEmitter */
     protected AbstractSapiEmitter $emitter;
 
     protected function setUp(): void

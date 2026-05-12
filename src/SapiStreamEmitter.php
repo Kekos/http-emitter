@@ -14,11 +14,12 @@ declare(strict_types=1);
 namespace Kekos\HttpEmitter;
 
 use Psr\Http\Message\ResponseInterface;
+use Kekos\HttpEmitter\Tests\SapiStreamEmitterTest;
 
 use const CONNECTION_NORMAL;
 
 /**
- * @see \Kekos\HttpEmitter\Tests\SapiStreamEmitterTest
+ * @see SapiStreamEmitterTest
  */
 final class SapiStreamEmitter extends AbstractSapiEmitter
 {

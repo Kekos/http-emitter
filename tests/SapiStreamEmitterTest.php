@@ -507,7 +507,7 @@ HTML;
         $this->emitter->emit($response);
 
         self::assertEquals('application/json', $response->getHeaderLine('content-type'));
-        self::assertEquals(json_encode($contents, JSON_THROW_ON_ERROR), ob_get_clean());
+        self::assertEquals(json_encode($contents, \JSON_THROW_ON_ERROR), ob_get_clean());
     }
 
     public function testEmitTextResponse(): void

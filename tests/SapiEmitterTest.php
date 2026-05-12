@@ -27,6 +27,9 @@ use Kekos\HttpEmitter\SapiEmitter;
 use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 use Psr\Http\Message\StreamInterface;
 
+use function ob_end_clean;
+use function ob_start;
+
 /**
  * @internal
  *
@@ -60,11 +63,11 @@ final class SapiEmitterTest extends AbstractEmitterTestCase
             ->withStatus(200)
             ->withBody($stream);
 
-        \ob_start();
+        ob_start();
 
         $this->emitter->emit($response);
 
-        if (false === \ob_end_clean()) {
+        if (false === ob_end_clean()) {
             throw new RuntimeException('Failed to clear output buffer');
         }
 

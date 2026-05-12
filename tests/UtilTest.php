@@ -21,6 +21,11 @@ use Kekos\HttpEmitter\Util;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
 
+use function ob_end_clean;
+use function ob_get_contents;
+use function ob_get_level;
+use function ob_start;
+
 /**
  * @internal
  *
@@ -51,11 +56,11 @@ final class UtilTest extends TestCase
             ->withAddedHeader('Content-Type', 'text/plain');
         $response->getBody()->write('Content!');
 
-        \ob_start();
+        ob_start();
 
         $this->emitter->emit(Util::injectContentLength($response));
 
-        if (false === \ob_end_clean()) {
+        if (false === ob_end_clean()) {
             throw new RuntimeException('Failed to clear output buffer');
         }
 
@@ -80,11 +85,11 @@ final class UtilTest extends TestCase
 
         $response = Util::injectContentLength($response);
 
-        \ob_start();
+        ob_start();
 
         $this->emitter->emit($response);
 
-        if (false === \ob_end_clean()) {
+        if (false === ob_end_clean()) {
             throw new RuntimeException('Failed to clear output buffer');
         }
 
@@ -104,15 +109,15 @@ final class UtilTest extends TestCase
             ->withAddedHeader('Content-Type', 'text/plain');
         $response->getBody()->write('Content!');
 
-        \ob_start();
+        ob_start();
 
         $this->emitter->emit($response);
 
-        self::assertSame(2, \ob_get_level());
+        self::assertSame(2, ob_get_level());
         // flush
         Util::closeOutputBuffers(1, true);
 
-        self::assertSame(1, \ob_get_level());
+        self::assertSame(1, ob_get_level());
     }
 
     public function testCloseOutputBuffersWithClean(): void
@@ -123,15 +128,15 @@ final class UtilTest extends TestCase
             ->withAddedHeader('Content-Type', 'text/plain');
         $response->getBody()->write('Content!');
 
-        \ob_start();
+        ob_start();
 
         $this->emitter->emit($response);
 
-        $content = \ob_get_contents(); // 'Content!'
+        $content = ob_get_contents(); // 'Content!'
 
         // clear
         Util::closeOutputBuffers(1, false);
 
-        self::assertNotSame(\ob_get_contents(), $content);
+        self::assertNotSame(ob_get_contents(), $content);
     }
 }

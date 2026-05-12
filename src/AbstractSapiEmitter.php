@@ -18,6 +18,14 @@ use Psr\Http\Message\ResponseInterface;
 
 use function function_exists;
 use function in_array;
+use function fastcgi_finish_request;
+use function ob_get_length;
+use function ob_get_level;
+use function rtrim;
+use function sprintf;
+use function str_replace;
+use function ucwords;
+use function vsprintf;
 
 use const PHP_SAPI;
 
@@ -48,7 +56,7 @@ abstract class AbstractSapiEmitter
         $file = $line = null;
 
         if (headers_sent($file, $line)) {
-            throw new RuntimeException(\sprintf(
+            throw new RuntimeException(sprintf(
                 'Unable to emit response: Headers already sent in file %s on line %s. '
                 . 'This happens if echo, print, printf, print_r, var_dump, var_export or similar statement that writes to the output buffer are used.',
                 $file,
@@ -56,11 +64,11 @@ abstract class AbstractSapiEmitter
             ));
         }
 
-        if (\ob_get_level() <= 0) {
+        if (ob_get_level() <= 0) {
             return;
         }
 
-        if (\ob_get_length() <= 0) {
+        if (ob_get_length() <= 0) {
             return;
         }
 
@@ -82,12 +90,12 @@ abstract class AbstractSapiEmitter
         $statusCode = $response->getStatusCode();
 
         header(
-            \vsprintf(
+            vsprintf(
                 'HTTP/%s %d%s',
                 [
                     $response->getProtocolVersion(),
                     $statusCode,
-                    \rtrim(' ' . $response->getReasonPhrase()),
+                    rtrim(' ' . $response->getReasonPhrase()),
                 ],
             ),
             true,
@@ -113,7 +121,7 @@ abstract class AbstractSapiEmitter
 
             foreach ($values as $value) {
                 header(
-                    \sprintf(
+                    sprintf(
                         '%s: %s',
                         $name,
                         $value,
@@ -132,10 +140,10 @@ abstract class AbstractSapiEmitter
      */
     protected function toWordCase(string $header): string
     {
-        $filtered = \str_replace('-', ' ', $header);
-        $filtered = \ucwords($filtered);
+        $filtered = str_replace('-', ' ', $header);
+        $filtered = ucwords($filtered);
 
-        return \str_replace(' ', '-', $filtered);
+        return str_replace(' ', '-', $filtered);
     }
 
     /**
@@ -144,12 +152,12 @@ abstract class AbstractSapiEmitter
      */
     protected function closeConnection(): void
     {
-        if (! \in_array(PHP_SAPI, ['cli', 'phpdbg'], true)) {
+        if (! in_array(PHP_SAPI, ['cli', 'phpdbg'], true)) {
             Util::closeOutputBuffers(0, true);
         }
 
-        if (\function_exists('fastcgi_finish_request')) {
-            if (false === \fastcgi_finish_request()) {
+        if (function_exists('fastcgi_finish_request')) {
+            if (false === fastcgi_finish_request()) {
                 throw new RuntimeException('Failed to finish FastCGI request');
             }
         }

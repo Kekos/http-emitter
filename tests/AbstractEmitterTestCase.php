@@ -27,8 +27,6 @@ use Kekos\HttpEmitter\Contract\RuntimeException;
 use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 use PHPUnit\Framework\TestCase;
 
-use function Safe\sprintf;
-
 /**
  * @internal
  */

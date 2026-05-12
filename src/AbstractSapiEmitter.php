@@ -18,9 +18,6 @@ use Psr\Http\Message\ResponseInterface;
 
 use function function_exists;
 use function in_array;
-use function Safe\fastcgi_finish_request;
-use function Safe\sprintf;
-use function Safe\vsprintf;
 
 use const PHP_SAPI;
 
@@ -152,7 +149,9 @@ abstract class AbstractSapiEmitter
         }
 
         if (function_exists('fastcgi_finish_request')) {
-            fastcgi_finish_request();
+            if (false === fastcgi_finish_request()) {
+                throw new RuntimeException('Failed to finish FastCGI request');
+            }
         }
     }
 }

@@ -15,10 +15,6 @@ namespace Kekos\HttpEmitter;
 
 use Psr\Http\Message\ResponseInterface;
 
-use function Safe\preg_match;
-use function Safe\substr;
-use function strlen;
-
 use const CONNECTION_NORMAL;
 
 /**

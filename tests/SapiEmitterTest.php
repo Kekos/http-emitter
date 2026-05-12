@@ -21,12 +21,11 @@ namespace Kekos\HttpEmitter\Tests;
  * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
  */
 
+use Kekos\HttpEmitter\Contract\RuntimeException;
 use Laminas\Diactoros\Response;
 use Kekos\HttpEmitter\SapiEmitter;
 use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 use Psr\Http\Message\StreamInterface;
-
-use function Safe\ob_end_clean;
 
 /**
  * @internal
@@ -65,7 +64,9 @@ final class SapiEmitterTest extends AbstractEmitterTestCase
 
         $this->emitter->emit($response);
 
-        ob_end_clean();
+        if (false === ob_end_clean()) {
+            throw new RuntimeException('Failed to clear output buffer');
+        }
 
         foreach (HeaderStack::stack() as $header) {
             self::assertStringNotContainsStringIgnoringCase('Content-Length:', (string) $header['header']);

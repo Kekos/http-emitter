@@ -13,14 +13,13 @@ declare(strict_types=1);
 
 namespace Kekos\HttpEmitter\Tests;
 
+use Kekos\HttpEmitter\Contract\RuntimeException;
 use Laminas\Diactoros\Response;
 use Kekos\HttpEmitter\SapiEmitter;
 use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 use Kekos\HttpEmitter\Util;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
-
-use function Safe\ob_end_clean;
 
 /**
  * @internal
@@ -56,7 +55,9 @@ final class UtilTest extends TestCase
 
         $this->emitter->emit(Util::injectContentLength($response));
 
-        ob_end_clean();
+        if (false === ob_end_clean()) {
+            throw new RuntimeException('Failed to clear output buffer');
+        }
 
         self::assertTrue(HeaderStack::has('HTTP/1.1 200 OK'));
         self::assertTrue(HeaderStack::has('Content-Type: text/plain'));
@@ -83,7 +84,9 @@ final class UtilTest extends TestCase
 
         $this->emitter->emit($response);
 
-        ob_end_clean();
+        if (false === ob_end_clean()) {
+            throw new RuntimeException('Failed to clear output buffer');
+        }
 
         foreach (HeaderStack::stack() as $header) {
             self::assertStringNotContainsStringIgnoringCase('Content-Length:', (string) $header['header']);

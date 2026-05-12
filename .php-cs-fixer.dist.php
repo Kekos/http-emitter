@@ -11,6 +11,8 @@ return (new PhpCsFixer\Config())
         'fully_qualified_strict_types' => [
             'import_symbols' => true,
         ],
+        'native_constant_invocation' => true,
     ])
+    ->setRiskyAllowed(true)
     ->setFinder($finder)
 ;

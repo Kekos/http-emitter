@@ -19,7 +19,7 @@ use Kekos\HttpEmitter\Tests\Helper\HeaderStack;
 
 use function function_exists;
 
-if (! function_exists('Kekos\\HttpEmitter\\headers_sent')) {
+if (! \function_exists('Kekos\\HttpEmitter\\headers_sent')) {
     /**
      * Have headers been sent?
      *
@@ -38,7 +38,7 @@ if (! function_exists('Kekos\\HttpEmitter\\headers_sent')) {
     }
 }
 
-if (! function_exists('Kekos\\HttpEmitter\\header')) {
+if (! \function_exists('Kekos\\HttpEmitter\\header')) {
     /**
      * Emit a header, without creating actual output artifacts.
      */

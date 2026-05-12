@@ -41,7 +41,7 @@ abstract class AbstractEmitterTestCase extends TestCase
         HeaderStack::$headersLine = 20;
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage(sprintf(
+        $this->expectExceptionMessage(\sprintf(
             'Unable to emit response: Headers already sent in file %s on line %s. This happens if echo, print, printf, print_r, var_dump, var_export or similar statement that writes to the output buffer are used.',
             HeaderStack::$headersFile,
             (string) HeaderStack::$headersLine,

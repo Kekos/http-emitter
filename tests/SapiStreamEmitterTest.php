@@ -66,11 +66,11 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
             ->withStatus(200)
             ->withBody($stream);
 
-        ob_start();
+        \ob_start();
 
         $this->emitter->emit($response);
 
-        self::assertEquals('it works', ob_get_clean());
+        self::assertEquals('it works', \ob_get_clean());
     }
 
     public function testDoesNotInjectContentLengthHeaderIfStreamSizeIsUnknown(): void
@@ -98,10 +98,10 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
             ->withStatus(200)
             ->withBody($stream);
 
-        ob_start();
+        \ob_start();
         $this->emitter->emit($response);
 
-        if (false === ob_end_clean()) {
+        if (false === \ob_end_clean()) {
             throw new RuntimeException('Failed to clear output buffer');
         }
 
@@ -120,7 +120,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
      */
     public function testEmitStreamResponse(bool $seekable, bool $readable, string $contents, int $maxBufferLength): void
     {
-        $size = strlen($contents);
+        $size = \strlen($contents);
         $startPosition = 0;
         $peakBufferLength = 0;
 
@@ -195,11 +195,11 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
             ->withStatus(200)
             ->withBody($stream);
 
-        ob_start();
+        \ob_start();
 
         $this->emitter->setMaxBufferLength($maxBufferLength);
         $this->emitter->emit($response);
-        $emittedContents = ob_get_clean();
+        $emittedContents = \ob_get_clean();
 
         self::assertEquals($contents, $emittedContents);
         self::assertLessThanOrEqual($maxBufferLength, $peakBufferLength);
@@ -224,7 +224,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
         int $maxBufferLength,
     ): void {
         [/* $unit */, $first, $last, /* $length */] = $range;
-        $size = strlen($contents);
+        $size = \strlen($contents);
 
         $startPosition = $readable && ! $seekable
             ? $first
@@ -308,13 +308,13 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
             ->withHeader('Content-Range', 'bytes ' . $first . '-' . $last . '/*')
             ->withBody($stream);
 
-        ob_start();
+        \ob_start();
 
         $this->emitter->setMaxBufferLength($maxBufferLength);
         $this->emitter->emit($response);
-        $emittedContents = ob_get_clean();
+        $emittedContents = \ob_get_clean();
 
-        self::assertEquals(substr($contents, $first, $last - $first + 1), $emittedContents);
+        self::assertEquals(\substr($contents, $first, $last - $first + 1), $emittedContents);
         self::assertLessThanOrEqual($maxBufferLength, $peakBufferLength);
     }
 
@@ -361,7 +361,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
         }
 
         $closureTrackMemoryUsage = static function () use (&$peakMemoryUsage): void {
-            $peakMemoryUsage = max($peakMemoryUsage, memory_get_usage());
+            $peakMemoryUsage = \max($peakMemoryUsage, \memory_get_usage());
         };
 
         $contentsCallback = static function (int $position, ?int $length = null) use (&$sizeBytes): string {
@@ -369,7 +369,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
                 $length = $sizeBytes - $position;
             }
 
-            return str_repeat('0', $length);
+            return \str_repeat('0', $length);
         };
 
         $trackPeakBufferLength = static function (int $bufferLength) use (&$peakBufferLength): void {
@@ -427,7 +427,7 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
             $response = $response->withHeader('Content-Range', 'bytes ' . $first . '-' . $last . '/*');
         }
 
-        ob_start(
+        \ob_start(
             static function () use (&$closureTrackMemoryUsage): string {
                 $closureTrackMemoryUsage();
 
@@ -436,20 +436,20 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
             $maxBufferLength,
         );
 
-        gc_collect_cycles();
-        gc_disable();
+        \gc_collect_cycles();
+        \gc_disable();
 
         $this->emitter->setMaxBufferLength($maxBufferLength);
         $this->emitter->emit($response);
 
-        if (false === ob_end_flush()) {
+        if (false === \ob_end_flush()) {
             throw new RuntimeException('Failed to flush output buffer');
         }
 
-        gc_enable();
-        gc_collect_cycles();
+        \gc_enable();
+        \gc_collect_cycles();
 
-        $localMemoryUsage = memory_get_usage();
+        $localMemoryUsage = \memory_get_usage();
 
         self::assertLessThanOrEqual($maxBufferLength, $peakBufferLength);
         self::assertLessThanOrEqual($maxAllowedMemoryUsage, $peakMemoryUsage - $localMemoryUsage);
@@ -460,12 +460,12 @@ final class SapiStreamEmitterTest extends AbstractEmitterTestCase
         $response = (new EmptyResponse())
             ->withStatus(204);
 
-        ob_start();
+        \ob_start();
 
         $this->emitter->emit($response);
 
         self::assertEmpty($response->getHeaderLine('content-type'));
-        self::assertEmpty(ob_get_clean());
+        self::assertEmpty(\ob_get_clean());
     }
 
     public function testEmitHtmlResponse(): void
@@ -482,12 +482,12 @@ HTML;
         $response = (new HtmlResponse($contents))
             ->withStatus(200);
 
-        ob_start();
+        \ob_start();
 
         $this->emitter->emit($response);
 
         self::assertEquals('text/html; charset=utf-8', $response->getHeaderLine('content-type'));
-        self::assertEquals($contents, ob_get_clean());
+        self::assertEquals($contents, \ob_get_clean());
     }
 
     /**
@@ -502,12 +502,12 @@ HTML;
         $response = (new JsonResponse($contents))
             ->withStatus(200);
 
-        ob_start();
+        \ob_start();
 
         $this->emitter->emit($response);
 
         self::assertEquals('application/json', $response->getHeaderLine('content-type'));
-        self::assertEquals(json_encode($contents, \JSON_THROW_ON_ERROR), ob_get_clean());
+        self::assertEquals(\json_encode($contents, \JSON_THROW_ON_ERROR), \ob_get_clean());
     }
 
     public function testEmitTextResponse(): void
@@ -517,12 +517,12 @@ HTML;
         $response = (new TextResponse($contents))
             ->withStatus(200);
 
-        ob_start();
+        \ob_start();
 
         $this->emitter->emit($response);
 
         self::assertEquals('text/plain; charset=utf-8', $response->getHeaderLine('content-type'));
-        self::assertEquals($contents, ob_get_clean());
+        self::assertEquals($contents, \ob_get_clean());
     }
 
     /**
@@ -536,11 +536,11 @@ HTML;
         $responseBody = $response->getBody();
         $responseBody->write($body);
 
-        ob_start();
+        \ob_start();
 
         $this->emitter->emit($response);
 
-        self::assertEquals($expected, ob_get_clean());
+        self::assertEquals($expected, \ob_get_clean());
     }
 
     public function testContentRangeUnseekableBody(): void
@@ -550,11 +550,11 @@ HTML;
             ->withBody($body)
             ->withHeader('Content-Range', 'bytes 3-6/*');
 
-        ob_start();
+        \ob_start();
 
         $this->emitter->emit($response);
 
-        self::assertEquals('lo w', ob_get_clean());
+        self::assertEquals('lo w', \ob_get_clean());
     }
 
     /**

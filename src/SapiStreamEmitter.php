@@ -52,7 +52,7 @@ final class SapiStreamEmitter extends AbstractSapiEmitter
         // Set the status _after_ the headers, because of PHP's "helpful" behavior with location headers.
         $this->emitStatusLine($response);
 
-        flush();
+        \flush();
 
         $range = $this->parseContentRange($response->getHeaderLine('Content-Range'));
 
@@ -73,7 +73,7 @@ final class SapiStreamEmitter extends AbstractSapiEmitter
      */
     private function parseContentRange(string $header): ?array
     {
-        if (preg_match(self::CONTENT_PATTERN_REGEX, $header, $matches) === 1) {
+        if (\preg_match(self::CONTENT_PATTERN_REGEX, $header, $matches) === 1) {
             return [
                 (string) $matches['unit'],
                 (int) $matches['first'],
@@ -104,7 +104,7 @@ final class SapiStreamEmitter extends AbstractSapiEmitter
         }
 
         if (! $body->isReadable()) {
-            echo substr($body->getContents(), $first, $length);
+            echo \substr($body->getContents(), $first, $length);
 
             return;
         }
@@ -113,11 +113,11 @@ final class SapiStreamEmitter extends AbstractSapiEmitter
 
         while ($remaining >= $maxBufferLength && ! $body->eof()) {
             $contents = $body->read($maxBufferLength);
-            $remaining -= strlen($contents);
+            $remaining -= \strlen($contents);
 
             echo $contents;
 
-            if (connection_status() !== CONNECTION_NORMAL) {
+            if (\connection_status() !== CONNECTION_NORMAL) {
                 break;
             }
         }
@@ -153,7 +153,7 @@ final class SapiStreamEmitter extends AbstractSapiEmitter
         while (! $body->eof()) {
             echo $body->read($maxBufferLength);
 
-            if (connection_status() !== CONNECTION_NORMAL) {
+            if (\connection_status() !== CONNECTION_NORMAL) {
                 break;
             }
         }

@@ -66,17 +66,17 @@ final class Util
      */
     public static function closeOutputBuffers(int $maxBufferLevel, bool $flush): void
     {
-        $status = ob_get_status(true);
-        $level = count($status);
+        $status = \ob_get_status(true);
+        $level = \count($status);
         $flags = PHP_OUTPUT_HANDLER_REMOVABLE | ($flush ? PHP_OUTPUT_HANDLER_FLUSHABLE : PHP_OUTPUT_HANDLER_CLEANABLE);
 
         while ($level-- > $maxBufferLevel && isset($status[$level]) && ($status[$level]['del'] ?? ! isset($status[$level]['flags']) || $flags === ($status[$level]['flags'] & $flags))) {
             if ($flush) {
-                if (false === ob_end_flush()) {
+                if (false === \ob_end_flush()) {
                     throw new RuntimeException('Failed to flush output buffer');
                 }
             } else {
-                if (false === ob_end_clean()) {
+                if (false === \ob_end_clean()) {
                     throw new RuntimeException('Failed to clear output buffer');
                 }
             }

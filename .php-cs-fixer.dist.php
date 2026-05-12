@@ -12,6 +12,15 @@ return (new PhpCsFixer\Config())
             'import_symbols' => true,
         ],
         'native_constant_invocation' => true,
+        'native_function_invocation' => [
+            'exclude' => [
+                'headers_sent',
+                'header',
+            ],
+            'include' => [
+                '@all',
+            ],
+        ],
     ])
     ->setRiskyAllowed(true)
     ->setFinder($finder)
